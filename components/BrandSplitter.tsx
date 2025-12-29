@@ -88,7 +88,7 @@ const BrandSplitter: React.FC<BrandSplitterProps> = ({ total, assigned, unassign
         <div className="glass p-6 rounded-[2.5rem] border-white/20 bg-black/60 backdrop-blur-2xl flex flex-col items-center min-w-[180px] shadow-[0_0_50px_rgba(255,255,255,0.05)]">
           <ShieldCheck className="w-8 h-8 text-white/40 mb-3" />
           <CountUp to={total} className="text-6xl font-black text-white" />
-          <span className="text-[10px] uppercase font-black text-white/30 tracking-[0.3em] mt-2">New Brands Added</span>
+          <span className="text-[10px] uppercase font-black text-white/30 tracking-[0.3em] mt-2">TERRITORY BRANDS CAPTURED</span>
         </div>
       </motion.div>
 
@@ -105,7 +105,7 @@ const BrandSplitter: React.FC<BrandSplitterProps> = ({ total, assigned, unassign
           </div>
           <div className="flex flex-col">
             <CountUp to={assigned} className="text-4xl font-black text-emerald-400" />
-            <span className="text-[10px] uppercase font-black text-white/30 tracking-widest">Assigned to BOs</span>
+            <span className="text-[10px] uppercase font-black text-white/30 tracking-widest">BRANDS SYNCED TO YOUR UNIT</span>
           </div>
         </div>
       </motion.div>
@@ -123,7 +123,7 @@ const BrandSplitter: React.FC<BrandSplitterProps> = ({ total, assigned, unassign
           </div>
           <div className="flex flex-col">
             <CountUp to={unassigned} className="text-4xl font-black text-white" />
-            <span className="text-[10px] uppercase font-black text-white/30 tracking-widest">Unassigned Territory</span>
+            <span className="text-[10px] uppercase font-black text-white/30 tracking-widest">UNASSIGNED FRONTIER OPS</span>
           </div>
         </div>
       </motion.div>

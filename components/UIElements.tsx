@@ -5,26 +5,125 @@ import { LucideIcon, Crown, ArrowRight, AlertCircle, TrendingUp, User, Trophy, S
 import CountUp from './CountUp';
 
 /**
- * SALES-FOCUSED HUMOROUS CALLOUT
- * Featured with a vertical line accent and italicized swagger.
+ * MONARCH SPOTLIGHT COMPONENT
+ * Replicates the premium spotlight UI for top performers.
  */
-export const FunnyCallout: React.FC<{ text: string; delay?: number }> = ({ text, delay = 0 }) => (
-  <motion.div 
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ delay, duration: 0.8 }}
-    className="flex gap-5 items-stretch mt-8 ml-2 group"
+export const MonarchSpotlight: React.FC<{
+  name: string;
+  avatar: string;
+  narrative: string;
+  value: number;
+  label: string;
+  isActive: boolean;
+}> = ({ name, avatar, narrative, value, label, isActive }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={isActive ? { opacity: 1, y: 0 } : {}}
+    transition={{ delay: 0.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+    className="w-full max-w-6xl glass rounded-[4rem] border-white/5 bg-black/40 p-12 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden group mx-auto"
   >
-    <div className="w-[3px] bg-gradient-to-b from-blue-500 via-indigo-500/50 to-transparent rounded-full group-hover:from-white transition-all duration-700" />
-    <p className="text-lg md:text-xl text-white/40 font-medium italic leading-relaxed py-1 max-w-sm group-hover:text-white/70 transition-colors duration-500">
+    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.03] via-transparent to-transparent pointer-events-none" />
+    
+    <div className="flex-[1.5] flex flex-col items-start gap-8">
+      <div className="flex items-center gap-8">
+        <motion.div 
+          className="relative"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <img 
+            src={avatar} 
+            className="w-24 h-24 rounded-full border-4 border-white/5 object-cover shadow-2xl ring-4 ring-purple-500/10" 
+          />
+          <div className="absolute -top-2 -right-2 bg-purple-500 rounded-full p-1.5 shadow-lg">
+            <Crown className="w-4 h-4 text-white" />
+          </div>
+        </motion.div>
+        <h3 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">{name}</h3>
+      </div>
+      <p className="text-lg md:text-xl text-white/40 font-medium leading-relaxed max-w-2xl">
+        {narrative}
+      </p>
+    </div>
+
+    <div className="flex-1 w-full lg:w-auto h-full min-h-[280px]">
+      <div className="h-full bg-white/[0.03] border border-white/10 rounded-[3.5rem] flex flex-col items-center justify-center relative overflow-hidden p-10 group-hover:bg-white/[0.05] transition-all duration-700">
+        <div className="absolute inset-0 bg-purple-500/[0.05] blur-3xl scale-150" />
+        <div className="relative z-10 flex flex-col items-center">
+          <CountUp to={value} className="text-[8rem] md:text-[10rem] font-black text-purple-500 tracking-tighter leading-none drop-shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
+          <span className="text-[10px] md:text-xs uppercase font-black tracking-[0.5em] text-white/30 mt-8 text-center px-4 leading-relaxed block border-t border-white/5 pt-6 w-full">
+            {label}
+          </span>
+        </div>
+        
+        <motion.div 
+          animate={{ x: ['-150%', '250%'] }}
+          transition={{ duration: 4, repeat: Infinity, repeatDelay: 3 }}
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent skew-x-12 pointer-events-none"
+        />
+      </div>
+    </div>
+  </motion.div>
+);
+
+/**
+ * INSIGHT CALLOUT COMPONENT
+ * Matches the vertical-line + narrative text style from the reference image.
+ */
+export const FunnyCallout: React.FC<{ text: string; delay?: number; color?: string }> = ({ text, delay = 0, color = "border-blue-500/40" }) => (
+  <motion.div 
+    initial={{ opacity: 0, x: -10 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ delay, duration: 0.6 }}
+    className={`flex items-start gap-5 pl-5 border-l-2 ${color} mt-8 mb-4 max-w-xl group`}
+  >
+    <p className="text-lg md:text-xl text-white/60 font-medium leading-snug group-hover:text-white/80 transition-colors duration-500">
       {text}
     </p>
   </motion.div>
 );
 
 /**
+ * STAT CARD COMPONENT
+ * Minimalist design matching the square, clean look of the reference image.
+ */
+export const StatCard: React.FC<{ 
+  value: number; 
+  label: string; 
+  suffix?: string; 
+  colorClass: string; 
+  delay?: number; 
+  highlight?: boolean;
+}> = ({ value, label, suffix = '', colorClass, delay = 0, highlight = false }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ delay, duration: 0.6 }}
+    className={`glass p-8 rounded-2xl border-white/5 flex flex-col justify-between w-full aspect-square md:aspect-auto md:h-44 group transition-all duration-500 
+      ${highlight ? 'border-white/20 bg-white/[0.06] shadow-2xl' : 'bg-white/[0.03]'}`}
+  >
+    <div className="flex flex-col">
+      <CountUp 
+        to={value} 
+        suffix={suffix} 
+        className={`text-6xl font-black tracking-tighter ${colorClass} group-hover:scale-105 transition-transform origin-left`} 
+      />
+    </div>
+    <span className="text-[11px] uppercase font-black tracking-[0.3em] text-white/30 group-hover:text-white/50 transition-colors">
+      {label}
+    </span>
+    
+    {/* Subtle Sheen */}
+    <motion.div 
+      animate={{ x: ['-200%', '300%'] }}
+      transition={{ duration: 6, repeat: Infinity, repeatDelay: 2 }}
+      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent skew-x-12 pointer-events-none"
+    />
+  </motion.div>
+);
+
+/**
  * OLYMPIC PODIUM LEADERBOARD
- * Hierarchy: [Rank 5] [Rank 3] [Rank 1] [Rank 2] [Rank 4]
  */
 export const PodiumLeaderboard: React.FC<{
   items: Array<{ name: string; score: number | string; avatarUrl?: string }>;
@@ -113,16 +212,16 @@ export const PodiumLeaderboard: React.FC<{
 };
 
 export const ProgressRing: React.FC<{ progress: number; label: string; colorClass: string; delay?: number; }> = ({ progress, label, colorClass, delay = 0 }) => {
-  const radius = 60;
+  const radius = 55;
   const circ = 2 * Math.PI * radius;
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ delay, duration: 1 }}
-      className="flex-1 flex items-center gap-8 glass p-10 rounded-[2.5rem] group min-h-[220px]"
+      className="flex-1 flex items-center gap-8 glass p-8 lg:p-10 rounded-[2.5rem] group h-full"
     >
-      <div className="relative w-32 h-32 flex items-center justify-center">
+      <div className="relative w-28 h-28 flex items-center justify-center">
         <svg className="w-full h-full -rotate-90">
           <circle cx="50%" cy="50%" r={radius} className="fill-none stroke-white/5 stroke-[12px]" />
           <motion.circle
@@ -139,42 +238,11 @@ export const ProgressRing: React.FC<{ progress: number; label: string; colorClas
         </div>
       </div>
       <div className="flex flex-col">
-        <span className="text-2xl font-black text-white">{label}</span>
-        <span className="text-[10px] uppercase font-black tracking-widest text-white/30 mt-1">Operational Health</span>
+        <span className="text-3xl md:text-4xl font-black text-white tracking-tight">{label}</span>
       </div>
     </motion.div>
   );
 };
-
-export const StatCard: React.FC<{ 
-  icon?: LucideIcon; 
-  value: number; 
-  label: string; 
-  suffix?: string; 
-  colorClass: string; 
-  delay?: number; 
-  warning?: boolean; 
-  highlight?: boolean;
-}> = ({ icon: Icon, value, label, suffix = '', colorClass, delay = 0, warning = false, highlight = false }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.8 }}
-    className={`glass px-8 py-6 rounded-[2rem] border-white/5 flex items-center gap-6 w-full max-w-sm group transition-all duration-500 
-      ${warning ? 'border-rose-500/30' : ''} 
-      ${highlight ? 'border-blue-500/30 bg-blue-500/5 shadow-[0_15px_30px_rgba(59,130,246,0.1)] ring-1 ring-blue-500/10' : ''}`}
-  >
-    {Icon && (
-      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-black/40 border border-white/10 ${warning ? 'text-rose-500' : colorClass}`}>
-        <Icon className="w-6 h-6" />
-      </div>
-    )}
-    <div className="flex flex-col">
-      <CountUp to={value} suffix={suffix} className={`text-3xl md:text-4xl font-[950] tracking-tighter ${warning ? 'text-rose-500' : colorClass}`} />
-      <span className="text-[9px] uppercase font-black tracking-[0.3em] text-white/30 mt-1">{label}</span>
-    </div>
-  </motion.div>
-);
 
 export const PremiumFeatureCard: React.FC<{
   title: string;

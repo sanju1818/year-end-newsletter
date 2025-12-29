@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 interface RoleMetricSlideProps {
   roleLabel: string;
-  heading: string;
+  heading: React.ReactNode;
   isActive: boolean;
   roleColorClass: string;
   children: React.ReactNode;
