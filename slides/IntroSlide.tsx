@@ -23,23 +23,20 @@ const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-col items-center w-full"
       >
-        {/* Official ITW Universe Logo - Centered above the heading */}
+        {/* Official ITW Universe Hero Logo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={isActive ? { opacity: 1, scale: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 1, type: "spring", stiffness: 100 }}
-          className="mb-6 relative"
+          transition={{ delay: 0.2, duration: 1.2, type: "spring", stiffness: 60 }}
+          className="mb-8 relative"
         >
           <img 
-            src="itw-logo.png" 
+            src="https://itwuniverse.com/wp-content/uploads/2023/11/itw-universe-logo.png" 
             alt="ITW Universe" 
-            className="h-28 md:h-40 w-auto object-contain drop-shadow-[0_10px_40px_rgba(59,130,246,0.4)]"
-            onError={(e) => {
-               e.currentTarget.style.display = 'none';
-            }}
+            className="h-32 md:h-52 w-auto object-contain drop-shadow-[0_20px_60px_rgba(59,130,246,0.5)]"
           />
-          {/* Subtle glow behind the logo */}
-          <div className="absolute inset-0 bg-blue-500/20 blur-3xl -z-10 rounded-full scale-90" />
+          {/* Sub-logo premium glow */}
+          <div className="absolute inset-x-0 bottom-4 h-1/2 bg-blue-500/30 blur-3xl -z-10 rounded-full scale-110 opacity-40" />
         </motion.div>
 
         {/* Hero Typography Section */}

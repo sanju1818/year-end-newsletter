@@ -3,14 +3,9 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, RotateCcw } from 'lucide-react';
 import { SlideProps } from '../types';
-import confetti from 'https://esm.sh/canvas-confetti@1.9.3';
+import confetti from 'canvas-confetti';
 
 const FutureSlide: React.FC<SlideProps> = ({ isActive, onRestart }) => {
-  const points = [
-    "Ready for **arson**",
-    "in 2026."
-  ];
-
   useEffect(() => {
     if (isActive) {
       const timer = setTimeout(() => {
@@ -63,7 +58,6 @@ const FutureSlide: React.FC<SlideProps> = ({ isActive, onRestart }) => {
         transition={{ delay: 1.2, duration: 1.5, type: "spring" }}
         className="relative group"
       >
-        {/* Border-only subtle gradient animation */}
         <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]" />
         
         <button className="relative flex items-center gap-6 bg-black px-12 py-6 rounded-full text-2xl font-black border border-white/10 transition-all active:scale-95 hover:border-transparent group-hover:bg-zinc-900">
