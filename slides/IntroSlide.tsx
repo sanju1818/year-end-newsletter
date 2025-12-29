@@ -1,17 +1,16 @@
-
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
-import { SlideProps } from '../types';
+import React from "react";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { SlideProps } from "../types";
 
 const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
   return (
     <div className="flex flex-col items-center justify-center text-center w-full h-full relative overflow-hidden px-4">
       {/* Background Ambient Glow */}
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           scale: [1, 1.1, 1],
-          opacity: [0.15, 0.25, 0.15]
+          opacity: [0.15, 0.25, 0.15],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute w-[1000px] h-[1000px] bg-blue-600/10 blur-[150px] rounded-full -z-10"
@@ -27,12 +26,17 @@ const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={isActive ? { opacity: 1, scale: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 1.2, type: "spring", stiffness: 60 }}
+          transition={{
+            delay: 0.2,
+            duration: 1.2,
+            type: "spring",
+            stiffness: 60,
+          }}
           className="mb-8 relative"
         >
-          <img 
-            src="https://itwuniverse.com/wp-content/uploads/2023/11/itw-universe-logo.png" 
-            alt="ITW Universe" 
+          <img
+            src="/itw-logo-svg.svg"
+            alt="ITW Universe"
             className="h-32 md:h-52 w-auto object-contain drop-shadow-[0_20px_60px_rgba(59,130,246,0.5)]"
           />
           {/* Sub-logo premium glow */}
@@ -41,7 +45,7 @@ const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
 
         {/* Hero Typography Section */}
         <div className="flex flex-col items-center leading-none gap-2 md:gap-4">
-          <motion.h1 
+          <motion.h1
             className="text-[4rem] md:text-[7rem] lg:text-[9rem] font-black tracking-tighter text-white"
             initial={{ opacity: 0, y: 20 }}
             animate={isActive ? { opacity: 1, y: 0 } : {}}
@@ -63,14 +67,16 @@ const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
         </div>
 
         {/* Supporting Tagline */}
-        <motion.p 
+        <motion.p
           className="mt-12 text-base md:text-xl text-white/30 font-bold tracking-[0.2em] uppercase max-w-2xl leading-relaxed"
           initial={{ opacity: 0 }}
           animate={isActive ? { opacity: 1 } : {}}
           transition={{ delay: 1.2, duration: 1 }}
         >
-          The system evolved. The pack grew. <br/>
-          <span className="text-blue-400/50">One ecosystem. Total market dominance.</span>
+          The system evolved. The pack grew. <br />
+          <span className="text-blue-400/50">
+            One ecosystem. Total market dominance.
+          </span>
         </motion.p>
       </motion.div>
 
@@ -81,7 +87,9 @@ const IntroSlide: React.FC<SlideProps> = ({ isActive }) => {
         animate={isActive ? { opacity: 1 } : {}}
         transition={{ delay: 2, duration: 1 }}
       >
-        <span className="text-[9px] uppercase tracking-[0.5em] text-white/20 font-black mb-2">Witness the Momentum</span>
+        <span className="text-[9px] uppercase tracking-[0.5em] text-white/20 font-black mb-2">
+          Witness the Momentum
+        </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
