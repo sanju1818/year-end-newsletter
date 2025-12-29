@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon, Crown, ArrowRight, AlertCircle, TrendingUp, User, Trophy, Star } from 'lucide-react';
+import { LucideIcon, Crown, ArrowRight, AlertCircle, TrendingUp, User, Trophy, Star, Medal } from 'lucide-react';
 import CountUp from './CountUp';
 
 export const StatCard: React.FC<{
@@ -117,78 +117,106 @@ export const PodiumLeaderboard: React.FC<{
   colorClass: string;
   delay?: number;
 }> = ({ items, colorClass, delay = 0 }) => {
-  // Re-ordering for the request: Rank 1 is on the right, Rank 2 next to it, and so on.
-  // Order on screen: Rank 5 | Rank 4 | Rank 3 | Rank 2 | Rank 1
-  const displayItems = [...items.slice(0, 5)].reverse();
+  // Enforce Rank 1 -> Rank 5 order (tallest on left)
+  const displayItems = items.slice(0, 5);
 
   return (
-    <div className="flex items-end gap-3 md:gap-6 w-full max-w-6xl mt-12">
+    <div className="flex items-end gap-3 md:gap-4 w-full max-w-6xl mt-12">
       {displayItems.map((item, index) => {
-        // Original rank is based on items array (0 = Rank 1, 1 = Rank 2, etc.)
-        const actualRank = 5 - index;
-        const isLeader = actualRank === 1;
+        const actualRank = index + 1;
+        const isGold = actualRank === 1;
+        const isSilver = actualRank === 2;
+        const isBronze = actualRank === 3;
         
+        const rankStyles = {
+          1: { 
+            height: '420px', 
+            accent: 'text-yellow-400', 
+            bg: 'bg-gradient-to-t from-yellow-500/30 via-white/[0.08] to-transparent',
+            border: 'border-yellow-500/50',
+            glow: 'shadow-[0_0_60px_rgba(234,179,8,0.3)]',
+            icon: <Crown className="w-7 h-7 text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]" />
+          },
+          2: { 
+            height: '340px', 
+            accent: 'text-slate-300', 
+            bg: 'bg-gradient-to-t from-slate-400/15 via-white/[0.04] to-transparent',
+            border: 'border-slate-400/40',
+            glow: 'shadow-[0_0_40px_rgba(203,213,225,0.15)]',
+            icon: <Medal className="w-6 h-6 text-slate-300" />
+          },
+          3: { 
+            height: '280px', 
+            accent: 'text-orange-500', 
+            bg: 'bg-gradient-to-t from-orange-900/15 via-white/[0.03] to-transparent',
+            border: 'border-orange-900/30',
+            glow: 'shadow-[0_0_30px_rgba(194,65,12,0.1)]',
+            icon: <Medal className="w-6 h-6 text-orange-600" />
+          },
+          4: { height: '210px', accent: 'text-white/60', bg: 'bg-white/[0.04]', border: 'border-white/10', glow: '', icon: null },
+          5: { height: '160px', accent: 'text-white/40', bg: 'bg-white/[0.02]', border: 'border-white/5', glow: '', icon: null }
+        }[actualRank as 1|2|3|4|5];
+
         return (
           <motion.div
             key={actualRank}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: delay + (index * 0.1), duration: 0.8, ease: "easeOut" }}
-            className="flex-1 flex flex-col items-center group"
+            className="flex-1 flex flex-col items-center group relative"
           >
-            {/* Crown / Rank Indicator */}
-            <div className="mb-4 flex flex-col items-center">
-              {isLeader ? (
+            {/* Rank Indicator Badge */}
+            <div className="mb-4 flex flex-col items-center h-16 justify-end">
+              {rankStyles.icon ? (
                 <motion.div 
-                  animate={{ y: [0, -5, 0], rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="w-12 h-12 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(234,179,8,0.3)]"
+                  animate={isGold ? { y: [0, -6, 0], scale: [1, 1.1, 1] } : {}}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className={`w-14 h-14 rounded-full flex items-center justify-center z-10 ${rankStyles.bg} border ${rankStyles.border} ${rankStyles.glow} backdrop-blur-md`}
                 >
-                  <Crown className="w-6 h-6 text-yellow-500" />
+                  {rankStyles.icon}
                 </motion.div>
               ) : (
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2">
+                <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
                   <span className="text-[10px] font-black text-white/30">{actualRank}</span>
                 </div>
               )}
             </div>
 
-            {/* Stepped Column */}
+            {/* Podium Column */}
             <div 
-              className={`w-full rounded-t-[2rem] border transition-all duration-700 flex flex-col items-center justify-center px-4 gap-2 shadow-2xl overflow-hidden relative ${
-                isLeader 
-                  ? `bg-white/[0.08] border-white/30 ${colorClass.replace('text-', 'shadow-')}` 
-                  : 'bg-white/[0.02] border-white/5 group-hover:bg-white/[0.04]'
-              }`}
-              style={{ 
-                height: `${140 + (index * 40)}px`,
-                boxShadow: isLeader ? '0 0 40px rgba(59, 130, 246, 0.1)' : 'none'
-              }}
+              className={`w-full rounded-t-[2.5rem] border transition-all duration-700 flex flex-col items-center justify-center px-4 gap-2 backdrop-blur-sm overflow-hidden relative ${rankStyles.bg} ${rankStyles.border} ${rankStyles.glow} group-hover:bg-white/[0.12]`}
+              style={{ height: rankStyles.height }}
             >
-              {isLeader && (
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+              {/* Premium Shimmering Sheen */}
+              {(isGold || isSilver || isBronze) && (
+                <motion.div
+                  initial={{ x: '-150%' }}
+                  animate={{ x: '150%' }}
+                  transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 3 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent skew-x-12 pointer-events-none"
+                />
               )}
-              
-              <span className={`text-[11px] font-black uppercase text-center tracking-tight leading-tight ${isLeader ? 'text-white' : 'text-white/60'}`}>
+
+              <span className={`text-[11px] md:text-sm font-black uppercase text-center tracking-tight leading-tight px-2 ${actualRank <= 3 ? 'text-white' : 'text-white/40'}`}>
                 {item.name}
               </span>
               
               <div className="flex flex-col items-center">
                 <CountUp 
                   to={Number(item.score)} 
-                  className={`${isLeader ? 'text-6xl md:text-7xl' : 'text-3xl md:text-4xl'} font-black ${isLeader ? colorClass : 'text-white/80'}`} 
+                  className={`${isGold ? 'text-6xl md:text-[5rem]' : isSilver ? 'text-5xl md:text-6xl' : 'text-4xl md:text-5xl'} font-black ${rankStyles.accent} tracking-tighter`} 
                 />
-                {isLeader && (
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/40 mt-1">Closed Deals</span>
-                )}
+                <span className={`text-[9px] font-black uppercase tracking-[0.2em] mt-1 ${actualRank <= 3 ? 'text-white/40' : 'text-white/10'}`}>
+                  Deals Closed
+                </span>
               </div>
 
-              {isLeader && (
+              {/* Special Gold Base Glow */}
+              {isGold && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0.2, 0.5, 0.2] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent pointer-events-none"
+                  animate={{ opacity: [0.15, 0.4, 0.15] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-t from-yellow-500/20 to-transparent pointer-events-none"
                 />
               )}
             </div>

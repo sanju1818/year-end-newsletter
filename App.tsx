@@ -1,7 +1,7 @@
 
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Package, Users, TrendingUp, Briefcase, ArrowRight, Zap, Target, Shield, Trophy, CheckSquare, Calendar, Target as TargetIcon, Star, MousePointer2, UserPlus, UserMinus, Building2, Flame } from 'lucide-react';
+import { Package, Users, TrendingUp, Briefcase, ArrowRight, Zap, Target, Shield, Trophy, CheckSquare, Calendar, Target as TargetIcon, Star, MousePointer2, UserPlus, UserMinus, Building2, Flame, Map, Users2 } from 'lucide-react';
 import Background from './components/Background';
 import IntroSlide from './slides/IntroSlide';
 import RoleMetricSlide from './components/RoleMetricSlide';
@@ -138,7 +138,7 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 4. TASK EXECUTION ENGINE (Simplified labels and accurate math)
+    // 4. TASK EXECUTION ENGINE
     <RoleMetricSlide isActive={activeSlide === 4} roleLabel="EXECUTION" heading="Pure execution." roleColorClass="text-blue-500" styleNote="Tracking the journey from task initiation to final closure.">
       <div className="flex flex-col md:flex-row gap-16 items-center w-full">
          <ProgressRing progress={platformData.execution_rate} label="Task Completion Score" colorClass="text-blue-500" delay={0.8} />
@@ -164,7 +164,7 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 6. TOP INVENTORIES (REDESIGNED RANKING)
+    // 6. TOP INVENTORIES
     <RoleMetricSlide isActive={activeSlide === 6} roleLabel="MARKET LEADERS" heading="Market-moving inventories." roleColorClass="text-indigo-500" styleNote="The heavy hitters of the year.">
       <div className="flex flex-col w-full">
         <div className="flex justify-start mb-8">
@@ -182,16 +182,40 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 7. TOP VERTICALS (LEADERBOARD)
+    // 7. TOP VERTICALS
     <RoleMetricSlide isActive={activeSlide === 7} roleLabel="TERRITORIES" heading="Dominant territories." roleColorClass="text-emerald-500" styleNote="Top 5 verticals by deals closed. Built different.">
-      <PodiumLeaderboard colorClass="text-emerald-500" items={platformData.top_verticals} delay={0.8} />
-      <p className="mt-8 text-[10px] uppercase font-black text-white/20 tracking-widest">Top 5 verticals by deals closed</p>
+      <div className="flex flex-col w-full">
+        <div className="flex justify-start mb-8">
+           <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={activeSlide === 7 ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 1.2 }}
+            className="px-6 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 backdrop-blur-sm"
+           >
+              <Map className="w-4 h-4 text-emerald-400 fill-emerald-400/20" />
+              <span className="text-[11px] font-black uppercase tracking-[0.3em] text-white/80">Top 5 verticals by deals closed in 2025</span>
+           </motion.div>
+        </div>
+        <PodiumLeaderboard colorClass="text-emerald-500" items={platformData.top_verticals} delay={0.8} />
+      </div>
     </RoleMetricSlide>,
 
-    // 8. TOP DEAL CLOSERS (LEADERBOARD)
+    // 8. TOP DEAL CLOSERS
     <RoleMetricSlide isActive={activeSlide === 8} roleLabel="ELITE" heading="The deal closers." roleColorClass="text-blue-500" styleNote="Top 5 employees by deals closed. These names earned it.">
-      <PodiumLeaderboard colorClass="text-blue-500" items={platformData.top_closers} delay={0.8} />
-      <p className="mt-8 text-[10px] uppercase font-black text-white/20 tracking-widest">Top 5 employees by deals closed</p>
+      <div className="flex flex-col w-full">
+        <div className="flex justify-start mb-8">
+           <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={activeSlide === 8 ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 1.2 }}
+            className="px-6 py-2.5 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center gap-3 backdrop-blur-sm"
+           >
+              <Trophy className="w-4 h-4 text-blue-400 fill-blue-400/20" />
+              <span className="text-[11px] font-black uppercase tracking-[0.3em] text-white/80">Top 5 elite employees by deals closed</span>
+           </motion.div>
+        </div>
+        <PodiumLeaderboard colorClass="text-blue-500" items={platformData.top_closers} delay={0.8} />
+      </div>
     </RoleMetricSlide>,
 
     // 9. RELATIONSHIP MONARCH
@@ -206,7 +230,7 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 10. INVENTORY MOMENTUM (Simplified to show only one primary metric)
+    // 10. INVENTORY MOMENTUM
     <RoleMetricSlide isActive={activeSlide === 10} roleLabel="STRUCTURE" heading="Organizing the chaos." roleColorClass="text-indigo-500" styleNote="The ecosystem organized itself. Growth with structure.">
       <div className="flex flex-col gap-12 w-full">
         <div className="flex flex-col">
