@@ -1,8 +1,62 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon, Crown, ArrowRight, AlertCircle, TrendingUp, User, Trophy, Star, Medal } from 'lucide-react';
+import { LucideIcon, Crown, ArrowRight, AlertCircle, TrendingUp, User, Trophy, Star, Medal, Zap } from 'lucide-react';
 import CountUp from './CountUp';
+
+export const PremiumFeatureCard: React.FC<{
+  title: string;
+  description: string;
+  value: number;
+  label: string;
+  badgeText: string;
+  colorClass: string;
+  delay?: number;
+}> = ({ title, description, value, label, badgeText, colorClass, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ delay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    className="w-full max-w-5xl glass rounded-[3rem] border-white/10 p-4 md:p-6 flex flex-col md:flex-row items-center gap-8 group"
+  >
+    {/* Left Side: Content */}
+    <div className="flex-[1.5] flex flex-col items-start px-8 py-6">
+      <div className="bg-black/60 border border-white/10 rounded-full px-4 py-1.5 flex items-center gap-2 mb-8">
+        <Zap className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500/20" />
+        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/80">{badgeText}</span>
+      </div>
+      
+      <h3 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight group-hover:translate-x-1 transition-transform duration-500">
+        {title}
+      </h3>
+      
+      <p className="text-lg md:text-xl text-white/40 font-medium max-w-md leading-relaxed">
+        {description}
+      </p>
+    </div>
+
+    {/* Right Side: Inset Metric Box */}
+    <div className="flex-1 w-full h-full p-2">
+      <div className="h-full min-h-[220px] bg-white/[0.02] border border-white/5 rounded-[2.5rem] flex flex-col items-center justify-center relative overflow-hidden group-hover:border-white/15 transition-all duration-700">
+        <div className={`absolute inset-0 opacity-[0.03] blur-3xl ${colorClass.replace('text-', 'bg-')} scale-150`} />
+        
+        <div className="relative z-10 flex flex-col items-center">
+          <CountUp to={value} suffix="%" className={`text-7xl md:text-8xl font-black ${colorClass} tracking-tighter`} />
+          <span className="text-[10px] uppercase font-black tracking-[0.4em] text-white/30 mt-4">
+            {label}
+          </span>
+        </div>
+
+        {/* Shimmer Effect */}
+        <motion.div 
+          animate={{ x: ['-100%', '200%'] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none"
+        />
+      </div>
+    </div>
+  </motion.div>
+);
 
 export const StatCard: React.FC<{
   icon?: LucideIcon;

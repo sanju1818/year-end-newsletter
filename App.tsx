@@ -6,7 +6,7 @@ import Background from './components/Background';
 import IntroSlide from './slides/IntroSlide';
 import RoleMetricSlide from './components/RoleMetricSlide';
 import FutureSlide from './slides/FutureSlide';
-import { StatCard, StatPair, PodiumLeaderboard, ProgressRing, MetricPair, PersonHighlight, MemberList } from './components/UIElements';
+import { StatCard, StatPair, PodiumLeaderboard, ProgressRing, MetricPair, PersonHighlight, MemberList, PremiumFeatureCard } from './components/UIElements';
 import PremiumWaveLine from './components/PremiumWaveLine';
 import DotGrid from './components/DotGrid';
 import CountUp from './components/CountUp';
@@ -68,6 +68,7 @@ const platformData = {
   monarch_name: "Sneha R",
   monarch_title: "Relationship Monarch",
   monarch_interactions: 1240,
+  monarch_adoption: 94,
   
   // 10. Inventory Creation
   new_inventories: 384,
@@ -164,7 +165,7 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 6. TOP INVENTORIES
+    // 6. TOP INVENTORIES (ProductSlide implicitly uses this data)
     <RoleMetricSlide isActive={activeSlide === 6} roleLabel="MARKET LEADERS" heading="Market-moving inventories." roleColorClass="text-indigo-500" styleNote="The heavy hitters of the year.">
       <div className="flex flex-col w-full">
         <div className="flex justify-start mb-8">
@@ -218,14 +219,28 @@ const App: React.FC = () => {
       </div>
     </RoleMetricSlide>,
 
-    // 9. RELATIONSHIP MONARCH
+    // 9. RELATIONSHIP MONARCH (Updated to match reference UI)
     <RoleMetricSlide isActive={activeSlide === 9} roleLabel="INFLUENCE" heading="The Relationship Monarch." roleColorClass="text-purple-500" styleNote="Employee with highest POC interactions via ITW CRM.">
-      <div className="flex flex-col md:flex-row gap-16 items-center w-full">
-        <PersonHighlight name={platformData.monarch_name} role={platformData.monarch_title} colorClass="text-purple-500" delay={0.8} />
-        <div className="flex flex-col">
-           <span className="text-[10px] uppercase font-black text-white/30 tracking-[0.4em]">Consistency & Connection</span>
-           <span className="text-8xl font-black text-white">{platformData.monarch_interactions}</span>
-           <span className="text-xs font-bold text-purple-400">Employee with highest POC interactions via ITW CRM</span>
+      <div className="flex flex-col items-center w-full">
+        <PremiumFeatureCard 
+          title={platformData.monarch_name}
+          description="Defined the relationship benchmark with record POC interactions across the ITW CRM system."
+          value={platformData.monarch_adoption}
+          label="Active Adoption"
+          badgeText="Most Used Feature"
+          colorClass="text-purple-500"
+          delay={0.8}
+        />
+        <div className="mt-12 flex items-center gap-12 opacity-40">
+           <div className="flex flex-col items-center">
+              <span className="text-4xl font-black text-white">{platformData.monarch_interactions}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">Total Interactions</span>
+           </div>
+           <div className="w-px h-12 bg-white/20" />
+           <div className="flex flex-col items-center">
+              <span className="text-4xl font-black text-white">#1</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">System Rank</span>
+           </div>
         </div>
       </div>
     </RoleMetricSlide>,
