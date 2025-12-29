@@ -404,8 +404,8 @@ const App: React.FC = () => {
         style={{ scaleX }}
       />
 
-      {/* Side Navigation Slider */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
+      {/* Side Navigation Slider - Made tiny and subtle */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -414,21 +414,19 @@ const App: React.FC = () => {
           >
             <motion.div
               animate={{
-                width: activeSlide === index ? 24 : 8,
-                height: 8,
+                width: activeSlide === index ? 12 : 4,
+                height: 4,
                 backgroundColor:
                   activeSlide === index
-                    ? "rgba(156, 163, 175, 1)"
-                    : "rgba(255, 255, 255, 0.2)",
-                boxShadow:
-                  activeSlide === index
-                    ? "0 0 12px rgba(255, 255, 255, 0.15)"
-                    : "none",
+                    ? "rgba(156, 163, 175, 0.6)"
+                    : "rgba(255, 255, 255, 0.1)",
+                opacity: activeSlide === index ? 1 : 0.5,
               }}
-              className="rounded-full transition-all duration-300 group-hover:bg-white/40"
+              className="rounded-full transition-all duration-300 group-hover:bg-white/30 group-hover:opacity-100"
             />
-            <span className="absolute right-10 text-[10px] font-black uppercase tracking-widest text-white/0 group-hover:text-white/40 transition-all duration-300 pointer-events-none whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:right-12">
-              Slide {index + 1}
+            {/* Extremely subtle label on hover */}
+            <span className="absolute right-8 text-[8px] font-black uppercase tracking-widest text-white/0 group-hover:text-white/20 transition-all duration-300 pointer-events-none whitespace-nowrap opacity-0 group-hover:opacity-100">
+              {index + 1}
             </span>
           </button>
         ))}
