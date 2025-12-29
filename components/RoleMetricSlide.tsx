@@ -19,65 +19,61 @@ const RoleMetricSlide: React.FC<RoleMetricSlideProps> = ({
   children,
   styleNote
 }) => {
-  const words = heading.split(' ');
-  const lastWord = words.pop();
-  const firstPart = words.join(' ');
-
   const colorMap: {[key: string]: string} = {
-    'text-blue-500': 'rgba(59, 130, 246, 0.15)',
-    'text-indigo-500': 'rgba(99, 102, 241, 0.15)',
-    'text-purple-500': 'rgba(168, 85, 247, 0.15)',
-    'text-emerald-500': 'rgba(16, 185, 129, 0.15)',
+    'text-blue-500': 'rgba(59, 130, 246, 0.1)',
+    'text-indigo-500': 'rgba(99, 102, 241, 0.1)',
+    'text-purple-500': 'rgba(168, 85, 247, 0.1)',
+    'text-emerald-500': 'rgba(16, 185, 129, 0.1)',
+    'text-indigo-400': 'rgba(129, 140, 248, 0.1)',
   };
-  const glowColor = colorMap[roleColorClass] || 'rgba(255, 255, 255, 0.1)';
+  const glowColor = colorMap[roleColorClass] || 'rgba(255, 255, 255, 0.05)';
 
   return (
-    <div className="w-full h-full flex flex-col pt-24 pb-12 px-8 md:px-24 max-w-[90rem] mx-auto relative">
+    <div className="w-full h-full flex flex-col pt-24 pb-12 px-8 lg:px-24 max-w-[100rem] mx-auto relative overflow-hidden">
+      {/* Background Ambient Glow */}
       <motion.div 
         animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
-          x: [-20, 20, -20],
-          y: [-20, 20, -20]
+          scale: [1, 1.2, 1],
+          opacity: [0.2, 0.4, 0.2],
         }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-0 w-[600px] h-[600px] blur-[150px] rounded-full -z-10 pointer-events-none"
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 right-0 w-[800px] h-[800px] blur-[180px] rounded-full -z-10 pointer-events-none"
         style={{ backgroundColor: glowColor }}
       />
 
+      {/* Header Info */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={isActive ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.2 }}
-        className="mb-12 flex justify-between items-end"
+        className="mb-6 flex justify-between items-center"
       >
         <span className={`text-[10px] md:text-xs font-black uppercase tracking-[0.5em] block ${roleColorClass}`}>
           {roleLabel}
         </span>
         {styleNote && (
-          <span className="text-[9px] font-bold text-white/20 uppercase tracking-widest hidden md:block italic">
+          <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] italic hidden md:block">
             // {styleNote}
           </span>
         )}
       </motion.div>
 
+      {/* Narrative Heading */}
       <motion.h2
         initial={{ opacity: 0, x: -30 }}
         animate={isActive ? { opacity: 1, x: 0 } : {}}
-        transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="text-5xl md:text-[5.5rem] lg:text-[6.5rem] font-black leading-[1.05] tracking-tighter mb-16 w-full max-w-[85rem]"
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="text-4xl md:text-7xl lg:text-[5.5rem] font-[950] leading-[1] tracking-tighter mb-12 w-full max-w-[80rem] text-white"
       >
-        <span className="text-white opacity-90">{firstPart} </span>
-        <span className={`${roleColorClass} opacity-100 block whitespace-nowrap`}>
-          {lastWord}
-        </span>
+        {heading}
       </motion.h2>
 
+      {/* Dynamic Content - Flexible Container for Split View */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isActive ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-        className="flex flex-col md:flex-row gap-12 md:gap-24 items-start"
+        transition={{ delay: 0.7, duration: 1 }}
+        className="flex-1 flex"
       >
         {children}
       </motion.div>

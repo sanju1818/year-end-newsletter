@@ -6,17 +6,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'lucide': ['lucide-react']
-        }
-      }
-    }
-  },
-  optimizeDeps: {
-    include: ['lucide-react']
+    sourcemap: false
   },
   server: {
     port: 3000
